@@ -1,15 +1,13 @@
 body {
-    margin: 0;
-    text-align: center;
+    margin: 50px;
 }
 
 .math {
-    margin: 20px;
     border: solid teal;
 }
 
 #submit-btn, #clear-btn {
-    margin: 20px;
+    margin: 5px;
 }
 
 /* evil red error message */

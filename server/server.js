@@ -11,7 +11,7 @@ const PORT = 5000;
 
 // route connections to modules
 let calcLog = require('./modules/calcLog.js');
-let answer = require('./modules/calcEquation.js');
+let calcAnswer = require('./modules/calcEquation.js');
 
 // adding body parser
 app.use(bodyParser.urlencoded({extended:true}));
@@ -20,24 +20,32 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('server/public'));
 
 // GET requests
-app.get('/equation', (req, res) => {
+app.get('/equations', (req, res) => {
   console.log('Request for /equation made to send to CalcLog');
 
-  res.send(equation);
+  res.send(calcLog);
 })
 
 app.get('/answer', (req, res) => {
   console.log('Request for /answer made');
 
-  res.send(answer);
+  res.send(calcAnswer);
 })
 
 // POST requests
-app.post('/equation', (req, res) => {
-  console.log('Posting request /equation', req.body);
+app.post('/equations', (req, res) => {
+  console.log('Posting request /equations', req.body);
 
   let equation = req.body;
   calcLog.push(equation);
+
+  res.sendStatus(200);
+})
+
+app.post('/answer', (req, res) => {
+  console.log('Posting request /answer', req.body);
+
+  let equationAnswer = req.body;
 
   res.sendStatus(200);
 })

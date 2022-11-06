@@ -29,7 +29,7 @@ function grabSign() {
 
 // capturing submitted equation within an object to send to server
 function submitCalc() {
-    console.log('Submitting equation');
+    console.log('Submitting equation for calculation on the server');
 
     $.ajax({
         method: 'POST',
@@ -86,15 +86,17 @@ function renderToDom (answer) {
     alert('Error!', error);
     })
 
-
-    $('#calc-log').append(`
-        <ul>
-            <li>${firstNumber} ${operator} ${secondNumber}</li>
-        </ul>
-    `)
+    $('#answerEquals').append(`${answer}`);
 
     clearAll();
-}
+} // end renderToDom
+
+function renderCalcLog () {
+    $('#calc-log').append(`
+    <li>${firstNumber} ${operator} ${secondNumber}</li>
+`)
+} // end renderCalcLog
+
 
 // Keep a historical record of all math operations and solutions on the server. 
 // Display a list of all previous calculations on the page when it loads using a GET request. 
@@ -111,6 +113,8 @@ function calcHistory() {
         type: 'GET',
         url: '/calcLog'
     }).then(function(response) {
-    
+        renderToDom(response);
+    }).catch(function(error) {
+        alert('Error!', error);
     })
 }
