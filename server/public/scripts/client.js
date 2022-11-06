@@ -1,12 +1,15 @@
 $(document).ready(readyNow);
 
 //global variables
+let equation = {};
 let operator;
+let numberString = "";
 
 function readyNow() {
     console.log("jquery is loaded!");
 
     // click listeners
+    $('.numBtn').on('click', numClicked);
     $('.math').on('click', grabSign);
     $('#submit-btn').on('click', submitCalc);
     $('#clear-btn').on('click', clearAll);
@@ -22,10 +25,23 @@ function clearErr() {
     $('.errorMsg').empty();
 } // end clearErr
 
+// enter number clicked to string
+function numClicked() {
+    numberString += $(this).text();
+
+    // show on DOM
+    $('#numberDisplay').val(numberString);
+} // end numClicked
+
 // choosing operator
 function grabSign() {
     operator = $(this).text();
     console.log('Operator is:', operator);
+
+    equation.numOne = numberString;
+    equation.operator = operator;
+    numberString += operator;
+    $('#numberDisplay').text(numberString);
 } // end grabSign
 
 // capturing submitted equation within an object to send to server
@@ -35,25 +51,23 @@ function submitCalc() {
     $.ajax({
         method: 'POST',
         url: '/answer',
-        data: {
-        numOne: $('firstNumber').val(),
-        numTwo: $('secondNumber').val(),
-        eqOperator: operator
-        }
+        data: equation
     }).then(function(response) {
         console.log('Posting math', response);
         getCalc();
+        calcHistory();
     }).catch(function(error) {
         $('.errorMsg').append(`<h4>ERROR</h4>`);
     })
 } // end submitCalc
 
-// clear the user input fields
+// clear the user input field
 function clearAll() {
     console.log('Clearing inputs');
 
-    $('#firstNumber').val('');
-    $('#secondNumber').val('');
+    $('#numberDisplay').val('');
+    numberString = "";
+    equation = {};
 
     clearErr();
 } // end clearAll
@@ -93,13 +107,8 @@ function renderToDom (answer) {
     clearAll();
 } // end renderToDom
 
-// Keep a historical record of all math operations and solutions on the server. 
-// Display a list of all previous calculations on the page when it loads using a GET request. 
-// Update the list when a new calculation is made.
-// > NOTE: History should exist even after refreshing the page. It's expected that the history 
-// will go away after restarting the server. 
 function calcHistory() {
-    console.log('Loading prior calculations');
+    console.log('Loading prior calculation history');
 
     // emptying the log to append with new calc
     $('#calc-log').empty();
@@ -108,12 +117,18 @@ function calcHistory() {
         type: 'GET',
         url: '/calcLog'
     }).then(function(response) {
-        renderToDom(response);
+        response.forEach(calc => {equation}
+
+        $('#calc-log').append(`
+            <li>${equation}</li>
+        `);
     }).catch(function(error) {
         alert('Error!', error);
     })
+} // end calcHistory
 
-    $('#calc-log').append(`
-    <li>${firstNumber} ${operator} ${secondNumber}</li>
-    `)
-}
+// returns previous calculation from the log
+function runAgain() {
+    equation = $(this).data();
+    submitCalc();
+} // end runAgain

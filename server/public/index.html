@@ -15,18 +15,34 @@
     <h2>Server Side Calculator</h2>
         <br />
     <div id="calcContainer">
-        <input type="number" id="firstNumber">
-        <button class= "math">+</button>
-        <button class= "math">-</button>
-        <button class= "math">*</button>
-        <button class= "math">/</button>
-        <input type="number" id="secondNumber">
-        <button id="submit-btn">=</button>
+        <input type="text" id="numberDisplay">
         <button id="clear-btn">C</button>
-        <br />
-        <div class="errorMsg">
+
+        <button class= numBtn id="seven">7</button>
+        <button class= numBtn id="eight">8</button>
+        <button class= numBtn id="nine">9</button>
+        <button class= "math">+</button>
+
+        <button class= numBtn id="four">4</button>
+        <button class= numBtn id="five">5</button>
+        <button class= numBtn id="six">6</button>
+        <button class= "math">-</button>
+
+        <button class= numBtn id="one">1</button>
+        <button class= numBtn id="two">2</button>
+        <button class= numBtn id="three">3</button>
+        <button class= "math">*</button>
+
+        <button class= numBtn id="zero">0</button>
+        <button class= numBtn id="decimal">.</button>
+        <button id="submit-btn">=</button>
+        <button class= "math">/</button>
     </div>
         <br />
+        <div class="errorMsg">
+        </div>
+        <br />
+
     <div id="answerEquals">
     </div>
         <br />
@@ -34,6 +50,7 @@
         <h2>Calculator History:</h2>
             <ul id="calc-log">
             </ul>
+        <button id="deleteLog">Delete History</button>
     </section>
 </body>
 </html>
