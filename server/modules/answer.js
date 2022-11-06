@@ -5,16 +5,16 @@ module.exports = function(object) {
 
     switch(object.operator) {
         case '+':
-            return (numOne + numTwo);
+            return numOne + numTwo;
             break;
         case '-':
-            return (numOne - numTwo);
+            return numOne - numTwo;
             break;
         case '*':
-            return (numOne * numTwo);
+            return numOne * numTwo;
             break;
         case '/':
-            return (numOne / numTwo);
+            return numOne / numTwo;
             break;
         default:
             console.log('Uh oh! Not able to calculate');

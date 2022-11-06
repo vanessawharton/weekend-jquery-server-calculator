@@ -5,7 +5,7 @@ const app = express();
 const PORT = 5000;
 
 // route connections to modules
-let calcAnswer = require('./modules/answer.js');
+let answer = require('./modules/answer.js');
 let calcLog = [];
 
 // adding body parser
@@ -32,7 +32,7 @@ app.post('/answer', (req, res) => {
   console.log('Posting request /answer', req.body);
 
   let equation = req.body;
-  equation.answer = calcAnswer(equation);
+  equation.answer = answer(equation);
   calcLog.push(equation);
 
   res.sendStatus(200);
@@ -44,7 +44,6 @@ app.delete('/calcLog', (req, res) => {
   calcLog = [],
   res.sendStatus(200);
 })
-
 
 // PORT listening
 app.listen(PORT, () => {

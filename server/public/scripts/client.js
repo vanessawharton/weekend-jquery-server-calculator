@@ -1,7 +1,7 @@
 $(document).ready(readyNow);
 
 //global variables
-let equation = {};
+let calc = {};
 let operator;
 let numberString = "";
 
@@ -13,9 +13,8 @@ function readyNow() {
     $('.math').on('click', grabSign);
     $('#submit-btn').on('click', submitCalc);
     $('#clear-btn').on('click', clearAll);
-
-    // history log of previous calculations entered
-//    calcHistory();
+    $('#delete-btn').on('click', deleteLog);
+    $('#calcHistory').on('click', '.prevCalc', runAgain);
 } // end readyNow
 
 // clearing the error messages
@@ -95,7 +94,7 @@ function renderToDom (answer) {
     method: 'POST',
     url: '/answer',
     data: {
-        number: equationAnswer
+        number: answer
     }
     }).then(function(response) {
     }).catch(function(error) {
@@ -117,10 +116,10 @@ function calcHistory() {
         type: 'GET',
         url: '/calcLog'
     }).then(function(response) {
-        response.forEach(calc => {equation}
+        response.forEach(calc => {equation})
 
         $('#calc-log').append(`
-            <li>${equation}</li>
+            <li class="prevCalc">${equation}</li>
         `);
     }).catch(function(error) {
         alert('Error!', error);
@@ -132,3 +131,8 @@ function runAgain() {
     equation = $(this).data();
     submitCalc();
 } // end runAgain
+
+// deleting calc history
+function deleteLog() {
+    $('#calc-log').empty();
+} // end deleteLog
