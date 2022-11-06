@@ -1,9 +1,20 @@
 # Project Name
 
-[Project Instructions](./INSTRUCTIONS.md), this line may be removed once you have updated the README.md
-
+Server Side Calculator
 ## Description
 
-Your project description goes here. What problem did you solve? How did you solve it?
+Duration: Weekend Project
 
-Additional README details can be found [here](https://github.com/PrimeAcademy/readme-template/blob/master/README.md).
+This calculator was built to use a user interface where a user can input two values and the select type of mathematical operation (Addition, Subtraction, Multiplication, and Division). A clear button was created to clear the user input fields. History is tracked below of previous calculation inputs.
+
+## Built With
+
+Visual Studio Code
+JQuery
+GitHub
+
+## Acknowledgement
+Thanks to [Prime Digital Academy](www.primeacademy.io) who equipped and helped me to make this application a reality. Especially Liz and Dane for being awesome people. 
+
+## Support
+If you have functionality suggestions or issues, please feel free to reach out to me at [vanessa.primetime@gmail.com].

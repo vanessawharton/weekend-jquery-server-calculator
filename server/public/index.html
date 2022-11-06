@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Server Side Calculator</title>
+    <script src="vendors/jquery.js"></script>
+    <script src="scripts/client.js"></script>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <h1>Weekend Challenge #2</h1>
+        <br />
+    <h2>Server Side Calculator</h2>
+        <br />
+    <div id="calcContainer">
+        <input type="number" id="firstNumber">
+        <button class= "math">`+`</button>
+        <button class= "math">`-`</button>
+        <button class= "math">`*`</button>
+        <button class= "math">`/`</button>
+        <input type="number" id="secondNumber">
+        <button id="submit-btn">`=`</button>
+        <button id="clear-btn">`C`</button>
+        <br />
+        <div class="errorMsg">
+    </div>
+        <br />
+    <div id="answerEquals">
+    </div>
+        <br />
+    <div id="calcHistory">
+        <table id="guess-data">
+            <thead>
+                <h2>Calculator History</h2>
+            </thead>
+            <tbody id="calc-log">
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
