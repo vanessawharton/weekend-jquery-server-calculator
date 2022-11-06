@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Server Side Calculator</title>
-    <script src="vendors/jquery.js"></script>
+    <script src="scripts/jquery.js"></script>
     <script src="scripts/client.js"></script>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
@@ -16,13 +16,13 @@
         <br />
     <div id="calcContainer">
         <input type="number" id="firstNumber">
-        <button class= "math">`+`</button>
-        <button class= "math">`-`</button>
-        <button class= "math">`*`</button>
-        <button class= "math">`/`</button>
+        <button class= "math">+</button>
+        <button class= "math">-</button>
+        <button class= "math">*</button>
+        <button class= "math">/</button>
         <input type="number" id="secondNumber">
-        <button id="submit-btn">`=`</button>
-        <button id="clear-btn">`C`</button>
+        <button id="submit-btn">=</button>
+        <button id="clear-btn">C</button>
         <br />
         <div class="errorMsg">
     </div>
@@ -30,14 +30,10 @@
     <div id="answerEquals">
     </div>
         <br />
-    <div id="calcHistory">
-        <table id="guess-data">
-            <thead>
-                <h2>Calculator History</h2>
-            </thead>
-            <tbody id="calc-log">
-            </tbody>
-        </table>
-    </div>
+    <section id="calcHistory">
+        <h2>Calculator History:</h2>
+            <ul id="calc-log">
+            </ul>
+    </section>
 </body>
 </html>

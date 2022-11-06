@@ -87,11 +87,13 @@ function renderToDom (answer) {
     })
 
 
-    $('#calc-log').prepend(`
+    $('#calc-log').append(`
         <ul>
-            <li>CALCULATION</li>
+            <li>${firstNumber} ${operator} ${secondNumber}</li>
         </ul>
     `)
+
+    clearAll();
 }
 
 // Keep a historical record of all math operations and solutions on the server. 
@@ -108,7 +110,7 @@ function calcHistory() {
     $.ajax({
         type: 'GET',
         url: '/calcLog'
-    }).then(function (response) {
+    }).then(function(response) {
     
     })
 }

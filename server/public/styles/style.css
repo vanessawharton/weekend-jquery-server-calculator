@@ -1,44 +1,14 @@
 body {
+    margin: 0;
     text-align: center;
 }
 
-/* call animated color change for winner */
-.celebrate {
-    /* color: darkmagenta;
-    background-color: salmon; */
-    animation: color-change 1s infinite;
-}
-
-/* Animated color change */
-@keyframes color-change {
-    0% {color: darkmagenta;}
-    50% {color: gold;}
-    100% {color: darkmagenta;}
-    0% {background-color: gold;}
-    50% {background-color: darkmagenta;}
-    100% {background-color: gold;}
-}
-
-td {
-    text-align: center;
-}
-
-#guess-data {
-    margin: auto;
+.math {
+    margin: 20px;
     border: solid teal;
 }
 
-#guess-count {
-    display: flex;
-    margin: auto;
-    height: 30px;
-    width: 30px;
-    padding: 15px;
-    border: solid green;
-    justify-content: center;
-}
-
-#submit-btn, #range-btn {
+#submit-btn, #clear-btn {
     margin: 20px;
 }
 

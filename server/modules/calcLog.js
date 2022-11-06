@@ -1,3 +1,3 @@
-let calcLog = 0;
+let calcLog = [];
 
 module.exports = calcLog;
