@@ -12,7 +12,7 @@ function readyNow() {
     $('#clear-btn').on('click', clearAll);
 
     // history log of previous calculations entered
-    calcHistory();
+//    calcHistory();
 } // end readyNow
 
 // clearing the error messages
@@ -24,7 +24,8 @@ function clearErr() {
 
 // choosing operator
 function grabSign() {
-    $(this).text()= operator;
+    operator = $(this).text();
+    console.log('Operator is:', operator);
 } // end grabSign
 
 // capturing submitted equation within an object to send to server
@@ -73,6 +74,7 @@ function getCalc() {
 
 // render to DOM
 function renderToDom (answer) {
+    console.log('Rendering answer to DOM:', answer);
     $('#answerEquals').empty();
 
     $.ajax({
@@ -90,13 +92,6 @@ function renderToDom (answer) {
 
     clearAll();
 } // end renderToDom
-
-function renderCalcLog () {
-    $('#calc-log').append(`
-    <li>${firstNumber} ${operator} ${secondNumber}</li>
-`)
-} // end renderCalcLog
-
 
 // Keep a historical record of all math operations and solutions on the server. 
 // Display a list of all previous calculations on the page when it loads using a GET request. 
@@ -117,4 +112,8 @@ function calcHistory() {
     }).catch(function(error) {
         alert('Error!', error);
     })
+
+    $('#calc-log').append(`
+    <li>${firstNumber} ${operator} ${secondNumber}</li>
+    `)
 }
