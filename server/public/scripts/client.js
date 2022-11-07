@@ -37,20 +37,26 @@ function grabSign() {
     operator = $(this).text();
     console.log('Operator is:', operator);
 
-    equation.numOne = numberString;
-    equation.operator = operator;
+    calc.numOne = numberString;
+    calc.operator = operator;
     numberString += operator;
-    $('#numberDisplay').text(numberString);
+    $('#numberDisplay').val(numberString);
 } // end grabSign
 
 // capturing submitted equation within an object to send to server
 function submitCalc() {
     console.log('Submitting equation for calculation on the server');
 
+    // find second number using index of numberString and add to calc object
+    let sum = numberString.indexOf(calc.operator);
+    let secondNumber = numberString.substring(sum + 1);
+    calc.numTwo = secondNumber;
+    console.log('secondNumber is:', secondNumber);
+
     $.ajax({
         method: 'POST',
         url: '/answer',
-        data: equation
+        data: calc
     }).then(function(response) {
         console.log('Posting math', response);
         getCalc();
