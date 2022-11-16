@@ -5,8 +5,9 @@ const app = express();
 const PORT = 5000;
 
 // route connections to modules
-let answer = require('./modules/answer.js');
+const getAnswer = require('./modules/getTheResult.js');
 let calcLog = [];
+let answer = [];
 
 // adding body parser
 app.use(bodyParser.urlencoded({extended:true}));
@@ -18,11 +19,11 @@ app.use(express.static('server/public'));
 app.get('/answer', (req, res) => {
   console.log('Request for /answer');
 
-  res.send(calcLog[calcLog.length-1]);
+  res.send(answer);
 })
 
-app.get('/calcLog', (req, res) => {
-  console.log('Request for /calcLog made');
+app.get('/history', (req, res) => {
+  console.log('Request for /history made');
 
   res.send(calcLog);
 })
@@ -31,16 +32,16 @@ app.get('/calcLog', (req, res) => {
 app.post('/answer', (req, res) => {
   console.log('Posting request /answer', req.body);
 
-  let equation = req.body;
-  equation.answer = answer(equation);
-  calcLog.push(equation);
+  let eqInfo = req.body.answer;
+  console.log('req.body.answer is:', req.body.answer);
+  calcLog.push(eqInfo);
 
   res.sendStatus(200);
 })
 
 // DELETE requests
-app.delete('/calcLog', (req, res) => {
-  console.log('Request to delete /calcLog made');
+app.delete('/history', (req, res) => {
+  console.log('Request to delete /history made');
   calcLog = [],
   res.sendStatus(200);
 })

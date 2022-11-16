@@ -37,7 +37,7 @@ function grabSign() {
     operator = $(this).text();
     console.log('Operator is:', operator);
 
-    calc.numOne = numberString;
+    calc.firstNumber = numberString;
     calc.operator = operator;
     numberString += operator;
     $('#numberDisplay').val(numberString);
@@ -56,11 +56,11 @@ function submitCalc() {
     $.ajax({
         method: 'POST',
         url: '/answer',
-        data: calc
+        data: {calc}
     }).then(function(response) {
         console.log('Posting math', response);
-        getCalc();
-        calcHistory();
+        getAnswer();
+        getHistory();
     }).catch(function(error) {
         $('.errorMsg').append(`<h4>ERROR</h4>`);
     })
@@ -78,41 +78,41 @@ function clearAll() {
 } // end clearAll
 
 // gets answer from the server
-function getCalc() {
+function getAnswer() {
     console.log('Getting the calculations');
 
     $.ajax({
         method: 'GET',
         url: '/answer'
     }).then(function(response) {
-        renderToDom(response);
+        console.log('Going to render answer to DOM:', response);
+        $('#answerEquals').empty();
+        $('#answerEquals').append(`${calc.answer}`);
+        clearAll();
     }).catch(function(error) {
         alert('Error!', error);
     })
-} // end getCalc
+} // end getAnswer
 
 // render to DOM
-function renderToDom (answer) {
-    console.log('Rendering answer to DOM:', answer);
-    $('#answerEquals').empty();
+// function renderToDom (answer) {
+//     console.log('Rendering answer to DOM:', answer);
+//     $('#answerEquals').empty();
 
-    $.ajax({
-    method: 'POST',
-    url: '/answer',
-    data: {
-        number: answer
-    }
-    }).then(function(response) {
-    }).catch(function(error) {
-    alert('Error!', error);
-    })
+    // $.ajax({
+    // method: 'GET',
+    // url: '/answer',
+    // }).then(function(response) {
+    // }).catch(function(error) {
+    // alert('Error!', error);
+    // })
 
-    $('#answerEquals').append(`${answer}`);
+    // $('#answerEquals').append(`${calc.answer}`);
 
-    clearAll();
-} // end renderToDom
+    // clearAll();
+// } // end renderToDom
 
-function calcHistory() {
+function getHistory() {
     console.log('Loading prior calculation history');
 
     // emptying the log to append with new calc
@@ -120,17 +120,24 @@ function calcHistory() {
 
     $.ajax({
         type: 'GET',
-        url: '/calcLog'
+        url: '/history'
     }).then(function(response) {
-        response.forEach(calc => {equation})
-
-        $('#calc-log').append(`
-            <li class="prevCalc">${equation}</li>
-        `);
+        response.forEach(calc => {
+            let sum = calc.answer;
+            let numOne = calc.firstNumber;
+            let numTwo = calc.secondNumber;
+            let oper = calc.operator;
+            
+            $('#calc-log').append(`
+                <li class="prevCalc" data-numberOne="${numOne}" data-numberTwo="${numTwo}" data-operator="${oper}">
+                    ${numOne} ${oper} ${numTwo} = ${sum}
+                </li>
+            `);
+        })
     }).catch(function(error) {
         alert('Error!', error);
     })
-} // end calcHistory
+} // end getHistory
 
 // returns previous calculation from the log
 function runAgain() {
@@ -140,5 +147,15 @@ function runAgain() {
 
 // deleting calc history
 function deleteLog() {
-    $('#calc-log').empty();
+    console.log('Request to delete /calcLog');
+
+    $.ajax({
+        url: '/history',
+        type: 'DELETE',
+        success: (function (response) {
+            $('#calc-log').empty();
+        }).catch(function(error){
+            alert('Error!');
+        })
+    })
 } // end deleteLog
