@@ -5,9 +5,8 @@ const app = express();
 const PORT = 5000;
 
 // route connections to modules
-const getAnswer = require('./modules/getTheResult.js');
-let calcLog = [];
-let answer = [];
+const answer = require('./modules/answer.js');
+const history = require('./modules/history.js');
 
 // adding body parser
 app.use(bodyParser.urlencoded({extended:true}));
@@ -19,30 +18,30 @@ app.use(express.static('server/public'));
 app.get('/answer', (req, res) => {
   console.log('Request for /answer');
 
-  res.send(answer);
+  res.send(history[history.length-1]);
 })
 
 app.get('/history', (req, res) => {
   console.log('Request for /history made');
 
-  res.send(calcLog);
+  res.send(history);
 })
 
 // POST requests
 app.post('/answer', (req, res) => {
   console.log('Posting request /answer', req.body);
 
-  let eqInfo = req.body.answer;
-  console.log('req.body.answer is:', req.body.answer);
-  calcLog.push(eqInfo);
-
+  let eqInfo = req.body;
+  eqInfo.answer = answer(eqInfo);
+  history.push(eqInfo);
+  console.log('in server post req, eqInfo is:', eqInfo);
   res.sendStatus(200);
 })
 
 // DELETE requests
 app.delete('/history', (req, res) => {
-  console.log('Request to delete /history made');
-  calcLog = [],
+  console.log('In req, Request to delete /history made');
+  calcLog = [];
   res.sendStatus(200);
 })
 

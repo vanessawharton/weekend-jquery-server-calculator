@@ -1,9 +1,10 @@
 // creating switch function for easier math
-module.exports = function(object) {
-    let numOne = Number(object.firstNumber);
-    let numTwo = Number(object.secondNumber);
+module.exports = function({calc}) {
+    console.log('in /answer calc is:', calc);
+    let numOne = Number(calc.firstNumber);
+    let numTwo = Number(calc.secondNumber);
 
-    switch(object.operator) {
+    switch(calc.operator) {
         case '+':
             return numOne + numTwo;
             break;

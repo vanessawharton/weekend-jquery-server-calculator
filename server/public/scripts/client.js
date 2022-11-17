@@ -14,7 +14,7 @@ function readyNow() {
     $('#submit-btn').on('click', submitCalc);
     $('#clear-btn').on('click', clearAll);
     $('#delete-btn').on('click', deleteLog);
-    $('#calcHistory').on('click', '.prevCalc', runAgain);
+    // $('#calcHistory').on('click', '.prevCalc', runAgain);
 } // end readyNow
 
 // clearing the error messages
@@ -50,8 +50,9 @@ function submitCalc() {
     // find second number using index of numberString and add to calc object
     let sum = numberString.indexOf(calc.operator);
     let secondNumber = numberString.substring(sum + 1);
-    calc.numTwo = secondNumber;
+    calc.secondNumber = secondNumber;
     console.log('secondNumber is:', secondNumber);
+    console.log('calc is:', calc);
 
     $.ajax({
         method: 'POST',
@@ -85,9 +86,10 @@ function getAnswer() {
         method: 'GET',
         url: '/answer'
     }).then(function(response) {
-        console.log('Going to render answer to DOM:', response);
+        let calcAnswer = response.answer;
+        console.log('In getAnswer, calcAnswer:', calcAnswer);
         $('#answerEquals').empty();
-        $('#answerEquals').append(`${calc.answer}`);
+        $('#answerEquals').append(calcAnswer);
         clearAll();
     }).catch(function(error) {
         alert('Error!', error);
@@ -113,7 +115,7 @@ function getAnswer() {
 // } // end renderToDom
 
 function getHistory() {
-    console.log('Loading prior calculation history');
+    console.log('in getHistory');
 
     // emptying the log to append with new calc
     $('#calc-log').empty();
@@ -122,39 +124,35 @@ function getHistory() {
         type: 'GET',
         url: '/history'
     }).then(function(response) {
-        response.forEach(calc => {
-            let sum = calc.answer;
-            let numOne = calc.firstNumber;
-            let numTwo = calc.secondNumber;
-            let oper = calc.operator;
-            
+        for (let i = 0; i < response.length; i++) {       
+            console.log('In getHistory response[i]:', response[i]);     
             $('#calc-log').append(`
-                <li class="prevCalc" data-numberOne="${numOne}" data-numberTwo="${numTwo}" data-operator="${oper}">
-                    ${numOne} ${oper} ${numTwo} = ${sum}
+                <li class="prevCalc" data-numberOne="${response[i].firstNumber}" data-numberTwo="${response[i].secondNumber}" data-operator="${response[i].operator}">
+                    ${response[i].calc.firstNumber} ${response[i].calc.operator} ${response[i].calc.secondNumber}= ${response[i].answer}
                 </li>
             `);
-        })
-    }).catch(function(error) {
-        alert('Error!', error);
+        }
     })
 } // end getHistory
 
-// returns previous calculation from the log
-function runAgain() {
-    equation = $(this).data();
-    submitCalc();
-} // end runAgain
+// // returns previous calculation from the log
+// function runAgain() {
+//     equation = $(this).data();
+//     submitCalc();
+// } // end runAgain
 
 // deleting calc history
 function deleteLog() {
-    console.log('Request to delete /calcLog');
+    console.log('In deleteLog, Request to delete /history');
 
     $.ajax({
         url: '/history',
         type: 'DELETE',
         success: (function (response) {
+            console.log('delete response:', response);
             $('#calc-log').empty();
-        }).catch(function(error){
+            getHistory();
+        }).catch(function(error) {
             alert('Error!');
         })
     })
