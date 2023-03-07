@@ -1,8 +1,10 @@
+require('dotenv').config();
+
 // const for server run
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // route connections to modules
 const answer = require('./modules/answer.js');
